@@ -1,3 +1,4 @@
+import tkinter as tk
 from automata import Automata
 
 automata_poketower = Automata(
@@ -14,7 +15,7 @@ automata_poketower = Automata(
         "q9": "Cambio de Turno",
         "q10": "Siguiente Nivel",
         "q11": "Juego Completado"
-    }, 
+    },
     alfabeto={
         "SIC": "Seleccionar Iniciar Combate",
         "SP": "Seleccionar Pokemon",
@@ -28,7 +29,7 @@ automata_poketower = Automata(
         "SIT": "Seleccionar Iniciar Turno",
         "SSN": "Seleccionar Siguiente Nivel",
         "FJ": "Finalizar Juego"
-}, 
+    },
     transiciones={
         "q0": {"SIC": "q1"},
         "q1": {"SP": "q2"},
@@ -42,9 +43,40 @@ automata_poketower = Automata(
         "q9": {"SIT": "q1"},
         "q10": {"SIT": "q1"},
         "q11": {}
-    }, 
-    inicio="q0", 
+    },
+    inicio="q0",
     finales={"q11"}
 )
 
-automata_poketower.avanzar("SIC")
+# Lista de entrada y un índice para rastrear la posición actual
+entrada = ["SIC", "SP", "SH", "SAB", "SO", "EAH", "FJ"]
+indice_actual = 0  # Índice inicial
+
+
+def actualizar_estado():
+    global indice_actual
+    if indice_actual < len(entrada):
+        simbolo = entrada[indice_actual]
+        automata_poketower.avanzar(simbolo)
+        estado_actual_label.config(text=f"Estado actual: {automata_poketower.estado_actual}")
+        indice_actual += 1
+
+        if automata_poketower.es_estado_final(automata_poketower.estado_actual):
+            estado_actual_label.config(text=f"Estado final alcanzado: {automata_poketower.estado_actual}. Juego completado.")
+    else:
+        estado_actual_label.config(text="Fin de la cadena de entrada.")
+        boton_actualizar.config(state="disabled")  # Deshabilitar el botón al finalizar
+
+
+# Configuración de la interfaz gráfica
+root = tk.Tk()
+root.geometry("400x400")
+root.title("Poketower")
+
+estado_actual_label = tk.Label(root, text=f"Estado actual: {automata_poketower.estado_actual}", font=("Arial", 14))
+estado_actual_label.pack(pady=10)
+
+boton_actualizar = tk.Button(root, text="Avanzar", command=actualizar_estado)
+boton_actualizar.pack(pady=10)
+
+root.mainloop()
