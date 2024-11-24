@@ -109,6 +109,12 @@ def renderizar_estado_actual():
         case "q0":
             boton_sic = tk.Button(footer, text="Iniciar Combate (SIC)", command=lambda: avanzar_estado("SIC"))
             boton_sic.pack(pady=5)
+
+            vida_pokemon_aliado = tk.Label(canvas, text=f"{pokemon_aliados[0].nombre} ({pokemon_aliados[0].tipo}): {pokemon_aliados[0].vida} HP", font=("Arial", 12))
+            vida_pokemon_aliado.pack(pady=5)
+
+            vida_pokemon_enemigo = tk.Label(canvas, text=f"{pokemon_enemigo[0].nombre} ({pokemon_enemigo[0].tipo}): {pokemon_enemigo[0].vida} HP", font=("Arial", 12))
+            vida_pokemon_enemigo.pack(pady=5)
         case "q1":
             limpiar_footer()
             for pokemon in pokemon_aliados:
@@ -137,13 +143,16 @@ def renderizar_estado_actual():
                 boton_sp.pack(pady=5, anchor="center")
         case "q6":
             limpiar_footer()
-            boton_so = tk.Button(footer, text="Seleccionar Objetivo (SO)", command=lambda: avanzar_estado("SO"))
-            boton_so.pack(pady=5)
+            boton_eah = tk.Button(footer, text="Ejecutar Ataque o Habilidad (EAH)", command=lambda: avanzar_estado("EAH"))
+            boton_eah.pack(pady=5)
         case "q7":
             limpiar_footer()
-            boton_ft = tk.Button(footer, text="Finalizar Turno (FT)", command=lambda: avanzar_estado("FT"))
-            boton_sn = tk.Button(footer, text="Siguiente Nivel (SN)", command=lambda: avanzar_estado("SN"))
-            boton_fj = tk.Button(footer, text="Finalizar Juego (FJ)", command=lambda: avanzar_estado("FJ"))
+            pokemon_enemigo[0].vida -= pokemon_seleccionado.ataque
+            vida_pokemon_enemigo.config(text=f"{pokemon_enemigo[0].nombre} ({pokemon_enemigo[0].tipo}): {pokemon_enemigo[0].vida} HP")
+
+            #boton_ft = tk.Button(footer, text="Finalizar Turno (FT)", command=lambda: avanzar_estado("FT"))
+            #boton_sn = tk.Button(footer, text="Siguiente Nivel (SN)", command=lambda: avanzar_estado("SN"))
+            #boton_fj = tk.Button(footer, text="Finalizar Juego (FJ)", command=lambda: avanzar_estado("FJ"))
         case "q8":
             limpiar_footer()
             boton_sft = tk.Button(footer, text="Finalizar Turno (SFT)", command=lambda: avanzar_estado("SFT"))
