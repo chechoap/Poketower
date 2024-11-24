@@ -8,35 +8,6 @@ class Automata:
         self.estado_actual = inicio
         self.estado_anterior = None
 
-    def validar_entrada(self, entrada):
-        """
-        Valida una secuencia de entrada separada por comas.
-        Retorna un diccionario con el resultado.
-        """
-        if isinstance(entrada, str):
-            entrada = entrada.split(",")
-
-        for simbolo in entrada:
-            simbolo = simbolo.strip()
-            if simbolo not in self.alfabeto:
-                return {
-                    "exito": False,
-                    "mensaje": f"Error. El símbolo '{simbolo}' no está definido en el alfabeto.",
-                    "estado_actual": self.estado_actual
-                }
-            else:
-                return {
-                    "exito": True,
-                    "mensaje": f"Cadena aceptada.",
-                    "estado_actual": self.estado_actual
-                }
-            
-        return {
-            "exito": True,
-            "mensaje": "Entrada validada correctamente.",
-            "estado_actual": self.estado_actual
-        }
-
     def avanzar(self, simbolo):
         """
         Avanza al siguiente estado basado en el símbolo de entrada.
